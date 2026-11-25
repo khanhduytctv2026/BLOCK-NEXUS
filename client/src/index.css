@@ -1,0 +1,408 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Outfit", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --color-space: #070913;
+  --color-neon-cyan: #00f3ff;
+  --color-neon-purple: #bc13fe;
+  --color-neon-amber: #f59e0b;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    min-height: 100dvh;
+    background-color: #070913;
+    font-family: var(--font-sans);
+    color: #f1f5f9;
+    touch-action: manipulation;
+  }
+
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* =========================================================
+   1. COCKPIT TECHNICAL MICRO-GRID & CRT SCANLINE OVERLAY
+   ========================================================= */
+.hud-cockpit-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0.035;
+  background-image:
+    linear-gradient(rgba(0, 243, 255, 0.7) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 243, 255, 0.7) 1px, transparent 1px),
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.5) 0px,
+      rgba(255, 255, 255, 0.5) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  background-size: 28px 28px, 28px 28px, 100% 3px;
+}
+
+/* =========================================================
+   2. CHAMFERED SCI-FI HUD PANELS (.hud-panel)
+   ========================================================= */
+.hud-panel {
+  position: relative;
+  clip-path: polygon(
+    14px 0,
+    100% 0,
+    100% calc(100% - 14px),
+    calc(100% - 14px) 100%,
+    0 100%,
+    0 14px
+  );
+  background: linear-gradient(155deg, rgba(13, 20, 38, 0.92) 0%, rgba(7, 11, 23, 0.96) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 243, 255, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1px 0 rgba(0, 243, 255, 0.12);
+}
+
+.hud-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(135deg, rgba(0, 243, 255, 0.75) 0 1.5px, transparent 1.5px);
+  pointer-events: none;
+}
+
+.hud-panel::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(315deg, rgba(0, 243, 255, 0.75) 0 1.5px, transparent 1.5px);
+  pointer-events: none;
+}
+
+.hud-panel-purple {
+  position: relative;
+  clip-path: polygon(
+    14px 0,
+    100% 0,
+    100% calc(100% - 14px),
+    calc(100% - 14px) 100%,
+    0 100%,
+    0 14px
+  );
+  background: linear-gradient(155deg, rgba(22, 14, 44, 0.92) 0%, rgba(8, 10, 24, 0.96) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    inset 0 0 0 1px rgba(188, 19, 254, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.hud-panel-amber {
+  position: relative;
+  clip-path: polygon(
+    14px 0,
+    100% 0,
+    100% calc(100% - 14px),
+    calc(100% - 14px) 100%,
+    0 100%,
+    0 14px
+  );
+  background: linear-gradient(155deg, rgba(32, 21, 10, 0.93) 0%, rgba(10, 11, 21, 0.97) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    inset 0 0 0 1px rgba(245, 158, 11, 0.45),
+    inset 0 1px 0 rgba(254, 243, 199, 0.14);
+}
+
+.hud-panel-sm {
+  clip-path: polygon(
+    9px 0,
+    100% 0,
+    100% calc(100% - 9px),
+    calc(100% - 9px) 100%,
+    0 100%,
+    0 9px
+  );
+  background: rgba(8, 13, 27, 0.85);
+  box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.18);
+}
+
+/* Drop-shadow wrapper for chamfered panels */
+.hud-drop {
+  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.65));
+}
+
+/* Micro technical serial tag */
+.hud-serial {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.72);
+}
+
+/* =========================================================
+   3. TACTILE 3D ARCADE BUTTONS (.btn-arcade)
+   ========================================================= */
+.btn-arcade {
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.42);
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  border-right: 1px solid rgba(0, 0, 0, 0.25);
+  clip-path: polygon(
+    8px 0,
+    100% 0,
+    100% calc(100% - 8px),
+    calc(100% - 8px) 100%,
+    0 100%,
+    0 8px
+  );
+  transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.15s ease;
+}
+
+.btn-arcade::after {
+  content: "";
+  position: absolute;
+  top: -10%;
+  left: -75%;
+  width: 45%;
+  height: 120%;
+  transform: skewX(-24deg);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.34),
+    transparent
+  );
+  transition: left 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.btn-arcade:hover::after {
+  left: 135%;
+}
+
+.btn-arcade:hover {
+  filter: brightness(1.08);
+}
+
+.btn-arcade:active {
+  transform: translateY(3px);
+  box-shadow: none !important;
+}
+
+.btn-arcade:disabled {
+  opacity: 0.48;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-arcade-cyan {
+  background: linear-gradient(180deg, #22e3f5 0%, #06b6d4 58%, #0891b2 100%);
+  color: #04111d;
+  box-shadow:
+    0 4px 0 #0e5a72,
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.btn-arcade-green {
+  background: linear-gradient(180deg, #34d399 0%, #10b981 58%, #059669 100%);
+  color: #031912;
+  box-shadow:
+    0 4px 0 #065f46,
+    inset 0 1px 0 rgba(255, 255, 255, 0.48);
+}
+
+.btn-arcade-purple {
+  background: linear-gradient(180deg, #d946ef 0%, #a21caf 58%, #7e22ce 100%);
+  color: #ffffff;
+  box-shadow:
+    0 4px 0 #4c1d95,
+    inset 0 1px 0 rgba(255, 255, 255, 0.42);
+}
+
+.btn-arcade-amber {
+  background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 58%, #d97706 100%);
+  color: #1c0f03;
+  box-shadow:
+    0 4px 0 #92400e,
+    inset 0 1px 0 rgba(255, 255, 255, 0.52);
+}
+
+.btn-arcade-slate {
+  background: linear-gradient(180deg, #26324d 0%, #172036 60%, #111827 100%);
+  color: #e2e8f0;
+  box-shadow:
+    0 4px 0 #070b14,
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+/* =========================================================
+   4. ARCADE CARTRIDGE SCAN-BEAM & LED LOADER
+   ========================================================= */
+.cartridge-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.cartridge-scan-beam {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 44px;
+  top: -54px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.cartridge-card:hover .cartridge-scan-beam {
+  opacity: 1;
+  animation: scanBeamSweep 1.6s linear infinite;
+}
+
+@keyframes scanBeamSweep {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(340px);
+  }
+}
+
+.led-cell {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  transition: background-color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.led-cell-cyan {
+  background: #00f3ff;
+  border-color: #cffafe;
+  box-shadow: 0 0 10px rgba(0, 243, 255, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.led-cell-purple {
+  background: #d946ef;
+  border-color: #fae8ff;
+  box-shadow: 0 0 10px rgba(217, 70, 239, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.led-cell-amber {
+  background: #f59e0b;
+  border-color: #fef3c7;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+/* =========================================================
+   5. SCREEN TRANSITIONS & SCROLLBARS
+   ========================================================= */
+@keyframes screenFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes modalPopIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-screen-in {
+  animation: screenFadeIn 0.24s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-modal-in {
+  animation: modalPopIn 0.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Subtle GPU-composited Backdrop Scenery Motion */
+@keyframes backdropDriftSlow {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes backdropPulseSoft {
+  0%,
+  100% {
+    opacity: 0.68;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes backdropSpinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.backdrop-drift {
+  animation: backdropDriftSlow 7s ease-in-out infinite;
+}
+
+.backdrop-pulse {
+  animation: backdropPulseSoft 4.5s ease-in-out infinite;
+}
+
+.backdrop-spin {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: backdropSpinSlow 42s linear infinite;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(7, 9, 19, 0.75);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 243, 255, 0.32);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 243, 255, 0.58);
+}
